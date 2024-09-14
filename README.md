@@ -4,4 +4,4 @@ The Flood Fill Game is played on a square board with colored tiles. The goal is 
 
 The challenge is to do this in as few moves as possible!
 
-
+> Basically, It works similarly to a paint-bucket tool in MS paint, which changes all connected areas of the same color to a new color.
