@@ -56,5 +56,22 @@ class FloodFillStrategy:
                     print(f"Invalid input. Please enter a number between 0 and {num_colors - 1}.")
             except ValueError:
                 print("Invalid input. Please enter a valid integer.")
-                
-    
+    def choose_best_color(self, num_colors):
+        """
+        Choose the best color to maximize the number of connected tiles 
+        adjacent to the origin (tile at position (0, 0)). 
+
+        The algorithm uses a breadth-first search (BFS) to explore tiles 
+        adjacent to the origin and counts how many neighboring tiles 
+        share each color. It then greedily selects the color with the 
+        maximum number of adjacent tiles. In case of a tie, it chooses 
+        the color with the lowest numerical value.
+
+        Args:
+            num_colors (int): The total number of distinct colors on the board.
+
+        Returns:
+            int: The color (represented by an integer) that maximizes the 
+                number of adjacent tiles connected to the origin. If there is 
+                a tie, the color with the lowest rank is returned.
+        """
