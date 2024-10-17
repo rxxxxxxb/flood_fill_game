@@ -56,6 +56,20 @@ class FloodFillStrategy:
                     print(f"Invalid input. Please enter a number between 0 and {num_colors - 1}.")
             except ValueError:
                 print("Invalid input. Please enter a valid integer.")
+    
+    def _is_in_bounds(self, x, y):
+        """
+        Check if the given coordinates (x, y) are within the bounds of the board.
+
+        Args:
+            x (int): The x-coordinate (row index) of the tile.
+            y (int): The y-coordinate (column index) of the tile.
+
+        Returns:
+            bool: True if the coordinates are within the board boundaries, 
+        """ 
+        return 0 <= x < self.board_size and 0 <= y < self.board_size            
+    
     def choose_best_color(self, num_colors):
         """
         Choose the best color to maximize the number of connected tiles 
@@ -75,3 +89,44 @@ class FloodFillStrategy:
                 number of adjacent tiles connected to the origin. If there is 
                 a tie, the color with the lowest rank is returned.
         """
+        initial_tile_color = self.board[0][0]
+        
+        # Directional offsets to move (right, down, left, up)
+        direction_offsets = [(0, 1), (1, 0), (0, -1), (-1, 0)]  
+        
+        # Dictionary to store the count of adjacent colors and count 0 as default 
+        color_count = {color: 0 for color in range(num_colors)}
+        
+        # Use a queue to perform a BFS-like approach to find adjacent tiles
+        visited = set((0, 0)) # Marking the first tile as visited 
+        queue = [(0, 0)]  # Adding the first tile in the queue 
+        
+        best_color = initial_tile_color 
+        max_count = -1
+        
+        while queue:
+            x, y = queue.pop(0)
+            
+            for dx, dy in direction_offsets:
+                new_x, new_y = x + dx, y + dy
+                
+                if self._is_in_bounds(new_x, new_y) and (new_x, new_y) not in visited:
+                    visited.add((new_x, new_y)) 
+                    adjacent_color = self.board[new_x][new_y]
+                    
+                    if adjacent_color != initial_tile_color:
+                        color_count[adjacent_color] += 1
+                    else:
+                        queue.append((new_x, new_y)) 
+
+        # Find the color with the maximum count
+        for color, count in color_count.items():
+            if count > max_count:
+                best_color = color
+                max_count = count
+            elif count == max_count and color < best_color:
+                best_color = color
+
+        return best_color            
+                
+        

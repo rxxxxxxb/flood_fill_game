@@ -31,7 +31,8 @@ def main():
         
         # Get user input for the new color
         # new_color = strategy.choose_random(num_colors) # Choose random for simplicity 
-        new_color = strategy.get_user_color_choice(num_colors,moves)
+        # new_color = strategy.get_user_color_choice(num_colors,moves)
+        new_color = strategy.choose_best_color(num_colors)
 
         # Play the move and update the board
         game.play_move(new_color)
